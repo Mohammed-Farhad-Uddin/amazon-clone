@@ -4,11 +4,13 @@ import './Login.css';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from './firebase';
+import { getFirestore } from "firebase/firestore"
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
+export const db = getFirestore();// const db=app.firestore(); ei ta ora korce amr hocce na
 
-// const db=app.firestore();
+
 
 const Login = () => {
     const history = useHistory();

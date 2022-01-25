@@ -36,7 +36,9 @@ const Header = () => {
                 <Link to={!user && '/login'}>  
                     <div onClick={handleAuthentication} className="header_option">
                         <span className="header_optionLineOne">
-                            Hello Guest
+                            {/* user null hole means user na takle mane !user, r user takle ba true hole ba null na hole hobe user.email mane user ? user.email : "guest" */}
+                            {/* user?.email || "Guest" */}
+                            Hello {!user ? "Guest" : user.email}
                         </span>
                         <span className="header_optionLineTwo">
 
