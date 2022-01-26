@@ -9,6 +9,10 @@ import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../Context-Reducer/reducer';
 import axios from '../Payment/Axios/axios'; //should not from local axios, I mean 'axios' hobe na
 import { useHistory } from 'react-router-dom';
+import { db } from '../Login/Login';
+import {doc, setDoc} from 'firebase/firestore'
+
+
 
 
 const Payment = () => {
@@ -38,7 +42,7 @@ const Payment = () => {
     }, [basket]);//basket product add ba remove hole ei ta abr reload korbe.basket change hole ei ta abr call hobe.so product add ba remove hole price update hobe and client secret o update hobe proti product change e.
     console.log("the getClient secret is=>", clientSecret);
 
-
+    console.log(user,"user check for db collection in paymentIntent");
 
     const handleChange = (e) => {
         //listen for the change of Card Element
@@ -59,6 +63,28 @@ const Payment = () => {
                 card: elements.getElement(CardElement)
             }
         }).then(({ paymentIntent }) => {//ei kane.then e response asbe oi ta k destructure kore paymentIntend k newa hocce abd paymentIntend=payment confirm. payment confirm hole ei line er code gula te asbe
+
+
+            //--------- firebase version-8
+            // db.collection( db,"users")
+            // .doc(user?.uid)
+            // .collection("orders")
+            // .doc(paymentIntent.id)
+            // .set({
+            //     basket:basket,
+            //     amount:paymentIntent.amount,
+            //     created:paymentIntent.created
+            // });
+
+            //-------firebase version 9
+            const ref=doc(db,"users",(user?.uid),"orders",(paymentIntent.id))
+            setDoc(ref,{
+                basket:basket,
+                amount:paymentIntent.amount,
+                created:paymentIntent.created,
+            });
+            
+          
             setProcessing(false);
             setSucceeded(true);
             setError(null);
@@ -67,7 +93,7 @@ const Payment = () => {
                 type: 'EMPTY_BASKET',
             })
 
-            history.replace('./orders');
+            history.replace('/orders');
         })
 
     }

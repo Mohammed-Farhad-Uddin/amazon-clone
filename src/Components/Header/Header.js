@@ -7,6 +7,7 @@ import { useStateValue } from '../Context-Reducer/StateProvider';
 import { signOut } from "firebase/auth";
 import { auth } from '../Login/Login';
 
+
 const Header = () => {
     // const [state,dispatch]=useStateValue();
     const [{ basket, user }, dispatch] = useStateValue();
@@ -14,11 +15,11 @@ const Header = () => {
     const handleAuthentication = () => {
         if (user) {
             signOut(auth)
-            .then(() => {
-        
-            }).catch((error) => {
-                alert(error.message);
-            });
+                .then(() => {
+
+                }).catch((error) => {
+                    alert(error.message);
+                });
         }
     }
 
@@ -32,8 +33,8 @@ const Header = () => {
                 <SearchIcon className="header_searchIcon" />
             </div>
             <div className="header_nav">
-            {/* !user means user jodi null hoi, r if(user) means user jodi takhe mane null na hoi,,,,r if(!user) means user jodi na takhe mane user jodi null hoi */}
-                <Link to={!user && '/login'}>  
+                {/* !user means user jodi null hoi, r if(user) means user jodi takhe mane null na hoi,,,,r if(!user) means user jodi na takhe mane user jodi null hoi */}
+                <Link to={!user && '/login'}>
                     <div onClick={handleAuthentication} className="header_option">
                         <span className="header_optionLineOne">
                             {/* user null hole means user na takle mane !user, r user takle ba true hole ba null na hole hobe user.email mane user ? user.email : "guest" */}
@@ -47,14 +48,16 @@ const Header = () => {
                         </span>
                     </div>
                 </Link>
-                <div className="header_option">
-                    <span className="header_optionLineOne">
-                        Returns
-                    </span>
-                    <span className="header_optionLineTwo">
-                        & Orders
-                    </span>
-                </div>
+                <Link to="/orders">
+                    <div className="header_option">
+                        <span className="header_optionLineOne">
+                            Returns
+                        </span>
+                        <span className="header_optionLineTwo">
+                            & Orders
+                        </span>
+                    </div>
+                </Link>
                 <div className="header_option">
                     <span className="header_optionLineOne">
                         Your
